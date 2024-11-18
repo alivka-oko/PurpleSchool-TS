@@ -65,7 +65,6 @@ function toWords(number: number, asOrdinal: boolean = false): string {
 }
 
 function toWordsOrdinal(words: string) {
-  //Функция преобразования в порядковое число
   return words;
 }
 let finalNum = {};
