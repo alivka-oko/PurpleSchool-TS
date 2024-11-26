@@ -1,16 +1,18 @@
 import axios from "axios";
-async function getUsersArray() {
+async function getUsersArray(): Promise<User[]> {
   try {
-    const response = await axios.get("https://dummyjson.com/users");
+    const response = await axios.get<UserResponse>(
+      "https://dummyjson.com/users"
+    );
     const dataUsers: User[] = response.data.users;
     return dataUsers;
-  } catch (error) {
+  } catch (error: unknown) {
     if (error instanceof Error) {
       console.error(error.message);
     } else {
       console.error(`Неизвестная ошибка: ${error}`);
     }
-    throw new Error("Не удалось получить данные");
+    return [];
   }
 }
 
@@ -21,6 +23,13 @@ async function outputUsers() {
       `Имя: ${user.firstName}, Пол: ${user.gender}, Email: ${user.email}, Группа крови: ${user.bloodGroup}`
     );
   });
+}
+
+interface UserResponse {
+  users: User[];
+  total: number;
+  skip: number;
+  limit: number;
 }
 
 interface User {
