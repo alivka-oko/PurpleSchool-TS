@@ -1,16 +1,20 @@
-function difference(
-  a: Record<string, any>,
-  b: Record<string, any>
-): Pick<typeof a, Exclude<keyof typeof a | keyof typeof b, keyof typeof b>> {
-  for (let keyB in b) {
-    if (a[keyB]) {
-      delete a[keyB];
+function difference<
+  T extends Record<string, any>,
+  U extends Record<string, any>
+>(a: T, b: U): { [K in Exclude<keyof T, keyof U>]: T[K] } {
+  const result: Partial<T> = {};
+
+  for (const keyA in a) {
+    if (!b[keyA]) {
+      result[keyA] = a[keyA];
     }
   }
-  return a;
-}
-let a = { a: 5, b: "" };
-let b = { a: 10, c: true };
 
-let v0 = difference(a, b);
-console.log(v0);
+  return result as { [K in Exclude<keyof T, keyof U>]: T[K] };
+}
+
+const a = { a: 5, b: "" };
+const b = { a: 10, c: true };
+
+const diff = difference(a, b);
+console.log(diff); 
