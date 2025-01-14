@@ -1,13 +1,15 @@
 "use strict";
 function difference(a, b) {
-    for (let keyB in b) {
-        if (a[keyB]) {
-            delete a[keyB];
+    const result = {};
+    for (const key in a) {
+        if (!(key in b)) {
+            result[key] = a[key];
         }
     }
-    return a;
+    return result;
 }
-let a = { a: 5, b: "" };
-let b = { a: 10, c: true };
-let v0 = difference(a, b);
-console.log(v0);
+// Пример использования:
+const a = { a: 5, b: "" };
+const b = { a: 10, c: true };
+const diff = difference(a, b);
+console.log(diff); // { b: "", d: 12 }
