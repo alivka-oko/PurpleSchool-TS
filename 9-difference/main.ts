@@ -1,7 +1,12 @@
+type DifferenceType<
+  T extends Record<string, any>,
+  U extends Record<string, any>
+> = Pick<T, Exclude<keyof T, keyof U>>;
+
 function difference<
   T extends Record<string, any>,
   U extends Record<string, any>
->(a: T, b: U): Pick<T, Exclude<keyof T, keyof U>> {
+>(a: T, b: U): DifferenceType<T, U> {
   const result: Partial<T> = {};
 
   for (const keyA in a) {
@@ -10,7 +15,7 @@ function difference<
     }
   }
 
-  return result as Pick<T, Exclude<keyof T, keyof U>>;
+  return result as DifferenceType<T, U>;
 }
 
 const a = { a: 5, b: "" };
