@@ -26,7 +26,7 @@ function allowFunc(func) {
                 value = newValue;
             }
             else {
-                throw new Error(`Недопустимое значение`);
+                throw new Error(`Недопустимое значение - "${String(propertyKey)}" не может быть равен "${newValue}"`);
             }
         };
         const getter = () => value;
@@ -38,8 +38,14 @@ function allowFunc(func) {
         });
     };
 }
-let user = new User();
-user.age = 10;
-user.age = 5;
-console.log(user);
-console.log(user.age);
+try {
+    let user = new User();
+    user.age = 10;
+    user.age = -5;
+    console.log(user.age);
+}
+catch (e) {
+    if (e instanceof Error) {
+        console.log(e.message);
+    }
+}
