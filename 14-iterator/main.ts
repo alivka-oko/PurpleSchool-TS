@@ -62,8 +62,11 @@ class ItemList {
     });
   }
 
-  public sortByTag(sortMode: SortMode, sortDirection: SortDirection) {
-    if ((sortDirection == SortDirection.ASC)) {
+  public sortByTag(
+    sortMode: SortMode = SortMode.ID,
+    sortDirection: SortDirection = SortDirection.ASC
+  ) {
+    if (sortDirection == SortDirection.ASC) {
       this.items.sort(function (a, b) {
         if (a[sortMode] > b[sortMode]) {
           return 1;
